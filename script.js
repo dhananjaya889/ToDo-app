@@ -1,6 +1,6 @@
 const taskInput = document.getElementById("taskInput");
 const taskList = document.getElementById("taskList");
-const tasks = JSON.parse(localstorage.getItem(tasks)) || [];
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 function addTask() {
     const taskText = taskInput.value.trim();
@@ -27,8 +27,8 @@ function deleteTask(index) {
 function editTask(index) {
     const newTaskText = prompt("Edit the task: ", tasks[index].text);
 
-    if(newTaskText !== null){
-        tasks[index].text == newTaskText;
+    if (newTaskText !== null) {
+        tasks[index].text = newTaskText;
         
         localStorage.setItem("tasks", JSON.stringify(tasks));
         
@@ -51,3 +51,5 @@ function displayTasks() {
         taskList.appendChild(li);
     });
 }
+
+
