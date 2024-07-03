@@ -1,9 +1,9 @@
-const taskIput = document.getElementById("taskIput");
-const tasklist = document.getElementById("tasklist");
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
 const tasks = JSON.parse(localstorage.getItem(tasks)) || [];
 
-function addTask(){
-    const taskText = taskIput.ariaValueMax.trim();
+function addTask() {
+    const taskText = taskInput.value.trim();
     if(taskText === "") return;
 
     const task = {text: taskText};
@@ -11,12 +11,12 @@ function addTask(){
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
-    taskIput.value = "";
+    taskInput.value = "";
 
     displayTasks();
 }
 
-function deleteTask(index){
+function deleteTask(index) {
     tasks.splice(index, 1);
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -24,8 +24,8 @@ function deleteTask(index){
     displayTasks();
 }
 
-function editTask(index){
-    const newTaskText = promt("Edit the task: ", tasks[index].text);
+function editTask(index) {
+    const newTaskText = prompt("Edit the task: ", tasks[index].text);
 
     if(newTaskText !== null){
         tasks[index].text == newTaskText;
@@ -36,3 +36,18 @@ function editTask(index){
     }
 }
 
+function displayTasks() {
+    taskList.innerHTML = "";
+
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+        <span>${task.text}</span>
+        <hr>
+        <button class="edit-button" onclick="editTask(${index})">Edit</button>
+        <button class="delete-button" onclick="deleteTask(${index})">Delete</button>
+        `;
+
+        taskList.appendChild(li);
+    });
+}
